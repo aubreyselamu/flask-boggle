@@ -1,6 +1,6 @@
 from boggle import Boggle
 from flask import Flask, session, request, redirect, render_template, jsonify
-from testing import add
+
 
 
 app = Flask(__name__)
@@ -24,3 +24,17 @@ def check_word():
     response = boggle_game.check_valid_word(board, word)
 
     return jsonify({'result' : response})
+
+@app.route('/post-game', methods = ['POST'])
+def post_gmae():
+    '''Receive score, update nplays, update high score if appropriate.'''
+
+    score = request.json['score']
+    highscore = session.get('highscore', 0)
+    nplays = session.get('nplays', 0)
+
+    session[highscore] = max(score, highscore)
+    session[nplays] = nplays + 1
+
+    return jsonify(brokeRecord = score > highscore)
+
