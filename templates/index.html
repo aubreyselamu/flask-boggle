@@ -11,15 +11,20 @@
 
         <table class="board">
             <tbody>
-                {% for row in board%}
+                {% for row in board %}
                 <tr>
-                    {% for cell in board%}
+                    {% for cell in row %}
                     <td>{{ cell }}</td>
                     {% endfor %}
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+    
+    <p>
+        Score: <b class="score">0</b>
+        Seconds Left: <b class="timer"></b>
+    </p>
     
     <form method="POST" class="add-word">
         <input name="word" class="word" autofocus>
@@ -34,5 +39,8 @@
 <script src="http://unpkg.com/jquery"></script>
 <script src="https://unpkg.com/axios@0.19.0/dist/axios.js"></script>
 <script src="/static/boggle.js"></script>
+<script>
+    let game = new BoggleGame("boggle", 60);
+</script>
 </body>
 </html>

@@ -14,6 +14,12 @@ class BoggleGame {
         $('.add-word', this.board).on('submit', this.handleSubmit.bind(this))
     }
 
+    //Show score
+    showScore(score, cls){
+        $('.score', this.board)
+        .text(this.score)
+    }
+
 
     //Show a status message
     showMessage(msg,cls){
@@ -42,6 +48,8 @@ class BoggleGame {
             this.showMessage(`${word} is not a valid word on this board`, "err")
         } else {
             this.showMessage(`Added ${word}`, 'ok')
+            this.score += word.length
+            this.showScore()
         }
     }
 
