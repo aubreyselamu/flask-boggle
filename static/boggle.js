@@ -14,12 +14,16 @@ class BoggleGame {
         $('.add-word', this.board).on('submit', this.handleSubmit.bind(this))
     }
 
+    //Show word
+    showWord(){
+        $('.words', this.board).append($('<li>', {text : word}))
+    }
+
     //Show score
     showScore(score, cls){
         $('.score', this.board)
         .text(this.score)
     }
-
 
     //Show a status message
     showMessage(msg,cls){
@@ -51,7 +55,35 @@ class BoggleGame {
             this.score += word.length
             this.showScore()
         }
+
+        $word.val('').focus()
     }
 
+    //Update timer in DOM
+    showTimer(){
+        $('.timer',this.board).text(this.secs)
+    }
+
+    //Tick: Handle a second passing in game
+    async tick(){
+        this.secs -= 1
+        this.showTimer()
+
+        if(this.sec == 0){
+            clearInterval(this.timer)
+            await this.scoreGame()
+        }
+    }
+
+    async end_game(){
+        response = axios.post('/post-game', {score : score})
+        if(response.data.brokeRecord){
+            this.showMessage(`New highscore: ${this.score}`, 'ok')
+
+        } else {
+            this.showMessage(`Final Score: ${this.score}`, 'ok')
+        }
+    }
     
 }
+
