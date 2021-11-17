@@ -1,12 +1,11 @@
 class BoggleGame {
 
-
     constructor(boardId, secs = 60){
         this.secs = secs //game length
 
         this.score = 0
         this.words = new Set ()
-        this.board = $('#' + this.boardId)
+        this.board = $('#' + boardId)
 
         //every 1000 msc, 'tick'
         this.timer = setInterval(this.tick.bind(this), 1000)
@@ -35,8 +34,8 @@ class BoggleGame {
 
     /* handle submission of word: if unique and valid, score & show */
     async handleSubmit(evt){
-        evt.preventDefaukt()
-        const $word = ('.word', this.board)
+        evt.preventDefault()
+        const $word = $('.word', this.board)
 
         let word = $word.val()
         if(!word) return;
