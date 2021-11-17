@@ -6,5 +6,23 @@ from boggle import Boggle
 
 class FlaskTests(TestCase):
 
-    # TODO -- write tests for every view function / feature!
+    def setUp(self):
+        """Stuff to do before every test."""
+
+        self.client = app.test_client()
+        app.config['TESTING'] = True
+
+    def test_homepage(self):
+        with self.client:
+            response = self.client.get('/')
+            self.assertIn('board', session)
+            self.assertNotIn('highscore', session)
+            self.assertNotIn('nplays', session)
+
+
+
+
+
+
+
 
