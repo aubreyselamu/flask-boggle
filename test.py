@@ -5,19 +5,24 @@ from boggle import Boggle
 
 
 class FlaskTests(TestCase):
-
+    
     def setUp(self):
-        """Stuff to do before every test."""
-
-        self.client = app.test_client()
         app.config['TESTING'] = True
-
+    
     def test_homepage(self):
-        with self.client:
-            response = self.client.get('/')
+        with app.test_client() as client:
+            response = client.get('/')
             self.assertIn('board', session)
             self.assertNotIn('highscore', session)
             self.assertNotIn('nplays', session)
+            self.assertIn(b'<p>High Score:', response.data)
+            self.assertIn(b'Score:', response.data)
+            self.assertIn(b'Seconds Left:', response.data)
+    
+    
+
+
+
 
 
 
